@@ -42,6 +42,6 @@ while(ubound - lbound > tol){
 }
 
 # Print the minimizer and the minimum function value
-x <-  round(ubound, 4)
+x <- round(ubound, 4)
 cat(paste("The value of x minimizing f(x) equals", x, "."))
 cat(paste("The minimum of f(x) in the interval [0,2] equals"), eval(f), ".")
