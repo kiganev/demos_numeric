@@ -16,11 +16,13 @@ rm(fileloc)
 # Set locale to English
 Sys.setlocale("LC_ALL","English")
 
-# Example taken from Chong and Zak (2013), p. 116
-# Find the minimizer and the minimum value of the function:
-f <- expression(x^4 - 14*x^3 + 60*x^2 - 70*x)
+library(tidyverse)
 
-x <- seq(0, 2, by = 0.01)
+# Example taken from Chong and Zak (2013), p. 117
+# Find the minimizer and the minimum value of the function:
+f <- expression(0.5*x^2 - sin(x))
+
+x <- seq(-10, 10, by = 0.01)
 data1 <- as.data.frame(cbind(x, eval(f))) %>% 
   rename(fx = V2)
 
@@ -32,25 +34,31 @@ ggplot(data1, aes(x = x)) +
 # First derivative
 df <- D(f, 'x')
 
-# Domain interval endpoints
-lbound <- 0
-ubound <- 2
+# Second derivative
+d2f <- D(df, 'x')
 
 # Tolerance level
-tol <- 10e-10
+tol <- 1e-5
 
-while(ubound - lbound > tol){
-  x <- lbound + (ubound - lbound)/2
-  if(eval(df) > 0){
-    lbound <- lbound
-    ubound <- ubound - (ubound - lbound)/2
-  } else if(eval(df) < 0){
-    lbound <-  lbound + (ubound - lbound)/2
-    ubound <- ubound
+x_k <- 0.5
+
+x <- x_k
+x_k1 <- x - eval(df)/eval(d2f)
+
+iter <- 1
+
+repeat{
+  x <- x_k
+  x_k1 <- x - eval(df)/eval(d2f)
+  if(abs(x_k1 - x_k) < tol){
+    break
   }
+  x_k <- x_k1
+  iter <- iter + 1
 }
 
 # Print the minimizer and the minimum function value
-x <- round(ubound, 4)
+x <- x_k1
 cat(paste("The value of x minimizing f(x) equals", x, "."))
-cat(paste("The minimum of f(x) in the interval [0,2] equals"), eval(f), ".")
+cat(paste("The minimum of f(x) equals"), eval(f),".")
+cat(paste("It took", iter, "iterations to converge given the tolerance level."))
