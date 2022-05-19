@@ -125,3 +125,5 @@ repeat{
 }
 
 x3 <- x_k1
+
+cat(paste("The roots of the equation are", round(x1,1), ",", x2, ",", "and", x3, "."))
