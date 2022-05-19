@@ -62,3 +62,4 @@ x <- x_k1
 cat(paste("The value of x minimizing f(x) equals", x, "."))
 cat(paste("The minimum of f(x) equals"), eval(f),".")
 cat(paste("It took", iter, "iterations to converge given the tolerance level."))
+cat(paste("Since f''(x) equals", eval(d2f), "at the minimizer, this is a strict minimum.")) 
