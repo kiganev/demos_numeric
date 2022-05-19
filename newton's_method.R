@@ -42,9 +42,6 @@ tol <- 1e-5
 
 x_k <- 0.5
 
-x <- x_k
-x_k1 <- x - eval(df)/eval(d2f)
-
 iter <- 1
 
 repeat{
@@ -63,3 +60,68 @@ cat(paste("The value of x minimizing f(x) equals", x, "."))
 cat(paste("The minimum of f(x) equals"), eval(f),".")
 cat(paste("It took", iter, "iterations to converge given the tolerance level."))
 cat(paste("Since f''(x) equals", eval(d2f), "at the minimizer, this is a strict minimum.")) 
+
+#####################
+# Example 7.5, p. 119
+#####################
+g <- expression(x^3 - 12.2*x^2 + 7.45*x + 42)
+
+x <- seq(-5, 20, by = 0.01)
+data2 <- as.data.frame(cbind(x, eval(g))) %>% 
+  rename(gx = V2)
+
+# Make function plot
+ggplot(data2, aes(x = x)) + 
+  geom_line(aes(y = gx), col = "red") + 
+  geom_hline(yintercept = 0) + 
+  ylab("g(x)")
+
+# First derivative
+dg <- D(g, 'x')
+
+# Find first root
+x_k <- 12
+
+iter <- 1
+
+repeat{
+  x <- x_k
+  x_k1 <- x - eval(g)/eval(dg)
+  if(abs(x_k1 - x_k) < tol){
+    break
+  }
+  x_k <- x_k1
+  iter <- iter + 1
+}
+
+x1 <- x_k1
+
+# Second root
+x_k <- 5
+
+repeat{
+  x <- x_k
+  x_k1 <- x - eval(g)/eval(dg)
+  if(abs(x_k1 - x_k) < tol){
+    break
+  }
+  x_k <- x_k1
+  iter <- iter + 1
+}
+
+x2 <- x_k1
+
+# Third root
+x_k <- -5
+
+repeat{
+  x <- x_k
+  x_k1 <- x - eval(g)/eval(dg)
+  if(abs(x_k1 - x_k) < tol){
+    break
+  }
+  x_k <- x_k1
+  iter <- iter + 1
+}
+
+x3 <- x_k1
