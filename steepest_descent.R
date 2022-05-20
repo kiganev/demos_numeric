@@ -26,3 +26,6 @@ f <- expression(4*(x - 4)^4 + (y - 3)^2 + 4*(z + 5)^4)
 pd1 <- D(f, "x")
 pd2 <- D(f, "y")
 pd3 <- D(f, "z")
+
+# Starting point
+x <- c(4,2,-1)
