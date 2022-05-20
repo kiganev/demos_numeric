@@ -60,3 +60,20 @@ df2 <- D(f2, "alpha")
 d2f2 <- D(df2, "alpha")
 
 # Use Newton's method to find the alpha minimizer
+tol <- 1e-5
+
+alpha_k <- 0.075
+
+iter <- 1
+
+repeat{
+  alpha <- alpha_k
+  alpha_k1 <- alpha - eval(df2)/eval(d2f2)
+  if(abs(alpha_k1 - alpha_k) < tol){
+    break
+  }
+  alpha_k <- alpha_k1
+  iter <- iter + 1
+}
+
+alpha <- alpha_k1
