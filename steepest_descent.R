@@ -36,3 +36,4 @@ y <- vec[2]
 z <- vec[3]
 
 grad <- c(eval(pd1), eval(pd2), eval(pd3))
+
