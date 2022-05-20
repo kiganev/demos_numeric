@@ -53,8 +53,6 @@ ggplot(data1, aes(x = alpha)) +
   geom_line(aes(y = f_alpha), col = "red") + 
   ylab("f(alpha)")
 
-f2
-
 # First derivative
 df2 <- D(f2, "alpha")
 
