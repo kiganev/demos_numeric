@@ -37,3 +37,15 @@ z <- vec[3]
 
 grad <- c(eval(pd1), eval(pd2), eval(pd3))
 
+# Create function of alpha
+argfun <- paste("(", x, "- alpha *", grad[1], "- 4 ) ^ 4 + (", 
+                y, "- alpha *", grad[2], "- 3 ) ^ 2 + (",
+                z, "- alpha *", grad[3], "+ 5 ) ^ 4" )
+
+f2 <- str2expression(argfun)
+
+# First derivative
+df2 <- D(f2, "alpha")
+
+# Second derivative 
+d2f2 <- D(df2, "alpha")
