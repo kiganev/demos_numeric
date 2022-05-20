@@ -39,10 +39,21 @@ grad <- c(eval(pd1), eval(pd2), eval(pd3))
 
 # Create function of alpha
 argfun <- paste("(", x, "- alpha *", grad[1], "- 4 ) ^ 4 + (", 
-                y, "- alpha *", grad[2], "- 3 ) ^ 2 + (",
+                y, "- alpha *", grad[2], "- 3 ) ^ 2 + 4*(",
                 z, "- alpha *", grad[3], "+ 5 ) ^ 4" )
 
 f2 <- str2expression(argfun)
+
+alpha <- seq(0, 0.01, by = 0.0001)
+data1 <- as.data.frame(cbind(alpha, eval(f2))) %>% 
+  rename(f_alpha = V2)
+
+# Make function plot
+ggplot(data1, aes(x = alpha)) + 
+  geom_line(aes(y = f_alpha), col = "red") + 
+  ylab("f(alpha)")
+
+f2
 
 # First derivative
 df2 <- D(f2, "alpha")
