@@ -91,5 +91,10 @@ repeat{
     break
   }
   
+  vec
+  
   iter1 <- iter1 + 1
 }
+
+cat(paste("The vector that minimizes the function is [", 
+          round(vec[1],1), round(vec[2],1), round(vec[3],1),"]'."))
