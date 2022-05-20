@@ -49,3 +49,5 @@ df2 <- D(f2, "alpha")
 
 # Second derivative 
 d2f2 <- D(df2, "alpha")
+
+# Use Newton's method to find the alpha minimizer
