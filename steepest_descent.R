@@ -20,4 +20,9 @@ library(tidyverse)
 
 # Chong and Zak (2013), Example 8.1, p. 136
 # Find the minimizer of the function
-f <- expression(4*(x1 - 4)^4 + (x2 - 3)^2 + 4*(x3 + 5)^4)
+f <- expression(4*(x - 4)^4 + (y - 3)^2 + 4*(z + 5)^4)
+
+# Partial derivatives
+pd1 <- D(f, "x")
+pd2 <- D(f, "y")
+pd3 <- D(f, "z")
