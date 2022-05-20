@@ -30,52 +30,66 @@ pd3 <- D(f, "z")
 # Starting point
 vec <- c(4,2,-1)
 
-# Evaluate gradient
-x <- vec[1]
-y <- vec[2]
-z <- vec[3]
-
-grad <- c(eval(pd1), eval(pd2), eval(pd3))
-
-# Create function of alpha
-argfun <- paste("(", x, "- alpha *", grad[1], "- 4 ) ^ 4 + (", 
-                y, "- alpha *", grad[2], "- 3 ) ^ 2 + 4*(",
-                z, "- alpha *", grad[3], "+ 5 ) ^ 4" )
-
-f2 <- str2expression(argfun)
-
-alpha <- seq(0, 0.01, by = 0.0001)
-data1 <- as.data.frame(cbind(alpha, eval(f2))) %>% 
-  rename(f_alpha = V2)
-
-# Make function plot
-ggplot(data1, aes(x = alpha)) + 
-  geom_line(aes(y = f_alpha), col = "red") + 
-  ylab("f(alpha)")
-
-# First derivative
-df2 <- D(f2, "alpha")
-
-# Second derivative 
-d2f2 <- D(df2, "alpha")
-
-# Use Newton's method to find the alpha minimizer
-tol <- 1e-5
-
-alpha_k <- 0.075
-
-iter <- 1
+iter1 <- 1
 
 repeat{
-  alpha <- alpha_k
-  alpha_k1 <- alpha - eval(df2)/eval(d2f2)
-  if(abs(alpha_k1 - alpha_k) < tol){
+  # Evaluate gradient
+  x <- vec[1]
+  y <- vec[2]
+  z <- vec[3]
+
+  grad <- c(eval(pd1), eval(pd2), eval(pd3))
+
+  # Create function of alpha
+  argfun <- paste("(", x, "- alpha *", grad[1], "- 4 ) ^ 4 + (", 
+                  y, "- alpha *", grad[2], "- 3 ) ^ 2 + 4*(",
+                  z, "- alpha *", grad[3], "+ 5 ) ^ 4" )
+
+  f2 <- str2expression(argfun)
+
+  alpha <- seq(0, 0.01, by = 0.0001)
+  data1 <- as.data.frame(cbind(alpha, eval(f2))) %>% 
+    rename(f_alpha = V2)
+
+  # Make function plot
+  ggplot(data1, aes(x = alpha)) + 
+    geom_line(aes(y = f_alpha), col = "red") + 
+    ylab("f(alpha)")
+
+  # First derivative
+  df2 <- D(f2, "alpha")
+
+  # Second derivative 
+  d2f2 <- D(df2, "alpha")
+
+  # Use Newton's method to find the alpha minimizer
+  tol <- 1e-5
+
+  alpha_k <- 0.075
+
+  iter2 <- 1
+
+  repeat{
+    alpha <- alpha_k
+    alpha_k1 <- alpha - eval(df2)/eval(d2f2)
+    if(abs(alpha_k1 - alpha_k) < tol){
+      break
+    }
+    alpha_k <- alpha_k1
+    iter2 <- iter2 + 1
+  }
+
+  alpha <- alpha_k1
+
+  vec_m1 <- vec
+
+  vec <- vec_m1 - alpha * eval(grad)
+  
+  if(vec[1] - vec_m1[1] < tol & 
+     vec[2] - vec_m1[2] < tol & 
+     vec[3] - vec_m1[3] < tol){
     break
   }
-  alpha_k <- alpha_k1
-  iter <- iter + 1
+  
+  iter1 <- iter1 + 1
 }
-
-alpha <- alpha_k1
-
-vec <- vec - alpha * eval(grad)
