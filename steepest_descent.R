@@ -28,4 +28,11 @@ pd2 <- D(f, "y")
 pd3 <- D(f, "z")
 
 # Starting point
-x <- c(4,2,-1)
+vec <- c(4,2,-1)
+
+# Evaluate gradient
+x <- vec[1]
+y <- vec[2]
+z <- vec[3]
+
+grad <- c(eval(pd1), eval(pd2), eval(pd3))
