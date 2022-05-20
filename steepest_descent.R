@@ -77,3 +77,5 @@ repeat{
 }
 
 alpha <- alpha_k1
+
+vec <- vec - alpha * eval(grad)
